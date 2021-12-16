@@ -11,7 +11,7 @@ html {
 	-moz-background-size: cover;
 	-o-background-size: cover;
 	background-size: cover;
-	font-size: 16pt;
+	font-size: 14pt;
 	color: white;
 }
 
@@ -28,6 +28,16 @@ body {
 h1, h2, h3 {
 	text-transform: uppercase;
 	text-shadow: 0.2rem 0.2rem black;
+}
+
+::-webkit-scrollbar {
+  width: 0.4rem;
+  height: 0;
+  background: #222;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 0.5em;
 }
 
 .title {
@@ -87,4 +97,9 @@ h1, h2, h3 {
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.embed-twitter-timeline {
+	overflow-x: hidden;
+	overflow-y: scroll;
 }
