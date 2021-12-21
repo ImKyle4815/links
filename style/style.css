@@ -51,6 +51,12 @@ h1, h2, h3 {
 	height: 5rem;
 }
 
+a {
+	color: white;
+	user-select: none;
+	text-decoration: none;
+}
+
 .link {
 	display: grid;
 	grid-template-columns: 2rem auto 2rem;
@@ -60,9 +66,6 @@ h1, h2, h3 {
 	border-radius: 1.5rem;
 	border: 0.125rem solid white;
 	background-color: #000000aa;
-	color: white;
-	user-select: none;
-	text-decoration: none;
 	/*Transitions*/
 	transition: transform 0.15s;
 	-webkit-transition: transform 0.15s;
