@@ -1,9 +1,6 @@
+/*Importing google font (Montserrat semi bold)*/
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
-
-:root {
-	/*--random-rotation: 2s; */
-}
-
+/*Page-wide styling*/
 html {
 	background: url(../img/background.png) no-repeat center center fixed;
 	background-color: #080808;
@@ -14,7 +11,7 @@ html {
 	font-size: 14pt;
 	color: white;
 }
-
+/*Body*/
 body {
 	font-family: Montserrat, Sans-Serif;
 	text-align: center;
@@ -24,12 +21,12 @@ body {
 	margin: 0 auto 0 auto;
 	padding: 0.75rem;
 }
-
+/*header styling*/
 h1, h2, h3 {
 	text-transform: uppercase;
 	text-shadow: 0.2rem 0.2rem black;
 }
-
+/*Custom scrollbar*/
 ::-webkit-scrollbar {
   width: 0.4rem;
   height: 0;
@@ -39,7 +36,7 @@ h1, h2, h3 {
   background: #888;
   border-radius: 0.5em;
 }
-
+/*Page title*/
 .title {
 	margin: 0.5rem 0 1rem 0;
 }
@@ -50,13 +47,24 @@ h1, h2, h3 {
 	width: 5rem;
 	height: 5rem;
 }
-
+/*Default link styling*/
 a {
 	color: white;
 	user-select: none;
 	text-decoration: none;
 }
-
+/*Adds horizontal lines to the sides of elements*/
+.lines {
+	display: flex;
+	flex-direction: row;
+}
+.lines:before, .lines:after {
+	content: "";
+	margin: auto 0.5rem;
+	flex: 1 1;
+	border-bottom: 0.15rem solid white;
+}
+/*Stylization for links (rounded buttons with hover effects and icons)*/
 .link {
 	display: grid;
 	grid-template-columns: 2rem auto 2rem;
@@ -101,7 +109,7 @@ a {
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
-
+/*Twitter embed*/
 .embed-twitter-timeline {
 	overflow-x: hidden;
 	overflow-y: scroll;
