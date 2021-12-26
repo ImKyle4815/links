@@ -50,8 +50,12 @@ h1, h2, h3 {
 /*Default link styling*/
 a {
 	color: white;
-	/*user-select: none;*/
 	text-decoration: none;
+}
+/*Minilink styling*/
+.minilink {
+	color: white;
+	margin: 0.5rem auto;
 }
 /*Adds horizontal lines to the sides of elements*/
 .lines {
