@@ -1,2 +1,3 @@
-# links
-A small personal repository to play around with a linktr.ee-like webpage
+# Kyle Burton's Site
+
+React app for my site (links and more)

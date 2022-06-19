@@ -1,0 +1,51 @@
+$size: 2.5rem;
+
+.link-component {
+	display: grid;
+	grid-template-columns: $size auto $size;
+	height: $size;
+	padding: 0.25rem;
+	margin-bottom: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+	border-radius: $size;
+	border: 0.125rem solid white;
+	background-color: rgb(16, 16, 16);
+    cursor: pointer;
+    color: white;
+    text-decoration: none;
+	transition: transform 0.15s;
+	-webkit-transition: transform 0.15s;
+    &:hover {
+        background-color: rgb(20, 20, 20);
+        -webkit-transform: scale(1.04);
+        transform: scale(1.04);
+        -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 3);
+        transition-timing-function: cubic-bezier(0, 1, 0.5, 3);
+        border-color: $light-green;
+    }
+    & > img {
+        width: $size;
+        height: $size;
+        object-fit: contain;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -o-user-select: none;
+        user-select: none;
+    }
+    & > img.link-img-backdrop {
+        border-radius: calc($size / 2);
+        background-color: white;
+    }
+    & > span {
+        margin: auto;
+        max-height: 100%;
+        max-width: 100%;
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: calc($size / 2);
+    }
+}

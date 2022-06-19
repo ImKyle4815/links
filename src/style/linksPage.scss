@@ -1,0 +1,38 @@
+.embed-twitter-timeline {
+	overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+.linksPage {
+    padding-bottom: 2rem;
+}
+
+.linksPage-title {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // border: 0.25rem solid white;
+    & > div > img {
+        aspect-ratio: 1 / 1;
+        width: 6rem;
+    }
+    & > div > h1 {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+.linksPage-title-links {
+    margin: 0;
+    & > h3 {
+        margin: 0.5rem auto;
+        & > a {
+            text-decoration: none;
+        }
+    }
+}

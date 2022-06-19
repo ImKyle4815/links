@@ -1,0 +1,13 @@
+.link-div-component {
+	display: flex;
+	flex-direction: row;
+    text-align: center;
+    margin: 1.5rem auto;
+    font-size: 2rem;
+    &:before, &:after {
+        content: "";
+        margin: auto 0.5rem;
+        flex: 1 1;
+        border-bottom: 0.15rem solid white;
+    }
+}
