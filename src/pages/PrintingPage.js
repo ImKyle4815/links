@@ -142,7 +142,7 @@ const PrintingPage = () => {
                     Making proxies is tons of fun, and I can't recommend learning this process enough. It's served me and many others very well. The upfront investment can seem daunting, but it's well worth it. And if you already have a printer, then what are you waiting for? Get proxying!
                 </p>
                 <p>
-                    Thanks for sticking around to the end of this guide! I spend a lot of time and money developing these processes, and hosting and updating <a href="https://cardconjurer.com" target="_blank" rel="noreferrer">cardconjurer.com</a>. If I've helped you advance your proxying skills or make some beautifully shiny cards, please consider helping me out by using my affiliate links in <a href="#materials">Required Materials</a>, or supporting me via Patreon or PayPal.
+                    Thanks for sticking around to the end of this guide! I spend a lot of time and money developing these processes, and hosting and updating <a href="https://cardconjurer.com" target="_blank" rel="noreferrer">cardconjurer.com</a>. If I've helped you advance your proxying skills or make some beautifully shiny cards, please consider helping me out by using my affiliate links in <a href="#materials">Required Materials</a>, or supporting me via Patreon or PayPal. Thank you.
                 </p>
                 <div style={{maxWidth:"720px", marginLeft:"auto", marginRight:"auto"}}>
                     <Link text="Patreon" url="https://www.patreon.com/KyleBurton" img={require("../img/linkIcons/patreon.svg").default} />
