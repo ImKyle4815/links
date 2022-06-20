@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from './reportWebVitals';
 import './style/style.scss';
 import LinksPage from "./pages/LinksPage";
+import PrintingPage from './pages/PrintingPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
       <div>
         <BrowserRouter>
           <Routes>
+            <Route path="/print" element={<PrintingPage />} />
             <Route path="/" element={<LinksPage />} />
           </Routes>
         </BrowserRouter>
