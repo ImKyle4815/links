@@ -8,7 +8,7 @@ const PrintingPage = () => {
             <div className="printingGuide">
                 <h1>Kyle's Printing Guide</h1>
                 <h2>Introduction</h2>
-                <p>I've been playing magic since M14 in 2013, and I began my high quality proxying adventure in 2020.</p>
+                <p>I've been playing Magic since M14 in 2013, and I began my high quality proxying adventure in 2020.</p>
                 <p>Back in 2021 I made the following tweet sharing my printing process with the community:</p>
                 <div className="embeddedTweet">
                     <TwitterTweetEmbed 
