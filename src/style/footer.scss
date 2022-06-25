@@ -1,9 +1,9 @@
-$shadow-offset: 0.5rem;
-$shadow-blur: 2rem;
+$shadow-offset: 1rem;
+$shadow-blur: 1rem;
 $shadow-spread: -1rem;
 
 .Footer {
-    box-shadow: inset 0 $shadow-offset $shadow-blur $shadow-spread black;
+    box-shadow: inset 0 $shadow-offset $shadow-blur $shadow-spread rgb(0, 0, 0, 0.5);
     padding-top: 4rem;
     padding-bottom: 4rem;
     width: 100vw;
