@@ -10,24 +10,15 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <div className="App">
-      {/* <header className="header">
-        <p>
-          I'm the header.
-        </p>
-      </header> */}
       <div>
         <BrowserRouter>
           <Routes>
             <Route path="/print" element={<PrintingPage />} />
-            <Route path="/" element={<LinksPage />} />
+            <Route path="/links" element={<LinksPage />} />
+            <Route path="*" element={<LinksPage />} />
           </Routes>
         </BrowserRouter>
       </div>
-      {/* <footer className="footer">
-        <p>
-          I'm the footer.
-        </p>
-      </footer> */}
     </div>
   </React.StrictMode>
 );

@@ -1,8 +1,9 @@
 .printingGuide {
-    margin: 4rem auto;
+    margin: 2rem auto;
     & > h1 {
         text-align: center;
         font-size: 3rem;
+        margin-bottom: 0;
     }
     & > h2 {
         font-size: 2rem;
@@ -14,11 +15,9 @@
     & > p {
         font-size: 1.5rem;
     }
-    & > p > ul > li {
+    & > ul > li {
+        font-size: 1.5rem;
         margin-bottom: 0.5rem;
-        // & > a {
-        //     text-decoration: none;
-        // }
     }
 }
 
