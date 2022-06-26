@@ -1,0 +1,27 @@
+$enlargedMargin: 4rem;
+
+.image-zoomable-component {
+    & > img {
+        cursor: zoom-in;
+    }
+    & > div {
+        cursor: zoom-out;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        z-index: 100;
+        background-color: rgba(0, 0, 0, 0.5);
+        text-align: center;
+        backdrop-filter: blur(2px);
+        & > img {
+            user-select: none;
+            margin: auto;
+            padding: $enlargedMargin;
+            width: calc(100vw - (2 * $enlargedMargin));
+            height: calc(100vh - (2 * $enlargedMargin));
+            object-fit: contain;
+        }
+    }
+}

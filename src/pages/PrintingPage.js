@@ -2,6 +2,7 @@ import "../style/printingPage.scss";
 import { TwitterTweetEmbed } from 'react-twitter-embed';
 import Link from "../components/Link";
 import Footer from "../components/Footer";
+import ImageZoomable from "../components/ImageZoomable";
 
 const PrintingPage = () => {
     return (
@@ -28,7 +29,7 @@ const PrintingPage = () => {
                         <li><a href="#materials">Required Materials</a></li>
                         <li><a href="#digital">Making Digital Proxies</a></li>
                         <li><a href="#page-prep">Preparing Print Pages</a></li>
-                        <li><a href="#printing">Printing</a></li>
+                        <li><a href="#printing">Printing &amp; Cutting</a></li>
                         <li><a href="#conclusion">Conclusion</a></li>
                     </ul>
                     <h2 id="legalities">Proxy Legalities</h2>
@@ -55,7 +56,7 @@ const PrintingPage = () => {
                     </p>
                     <h2 id="materials">Required Materials</h2>
                     <p>
-                        You don't need to use the same exact materials I do, but they are proven to work, and they are my recommendation.
+                        You don't need to use the same exact materials I do, but since they're proven to work I highly recommend them. They're also affiliate links, which help me out!
                     </p>
                     <ul>
                         <li>
@@ -70,7 +71,7 @@ const PrintingPage = () => {
                             Paper (front)
                             <ul>
                                 <li>
-                                    I use <a href="https://www.amazon.com/Sheets-Holographic-Sticker-Printer-Rainbow/dp/B098N8R6P3?dchild=1&keywords=holographic%2Bsticker%2Bpaper%2B50&qid=1629220602&sr=8-3&th=1&linkCode=ll1&tag=imkyle4815-20&linkId=bea3a57f66bcb9a4f34e39c4dd9c8560&language=en_US&ref_=as_li_ss_tl" target="_blank" rel="noreferrer">Holographic Sticker Paper by Qixin</a>. If you're feeling really adventurous, you can check out some <a href="https://www.amazon.com/Holographic-Self-Adhesive-Waterproof-Transparent-Patterns/dp/B098QGYN66?crid=14P2GP20LHQ32&keywords=holographic+sticker+paper&qid=1655685817&sprefix=holographic+sticker+paper+50%2Caps%2C150&sr=8-5&linkCode=ll1&tag=imkyle4815-20&linkId=a95987b533e1589fccd51f720b0b67b7&language=en_US&ref_=as_li_ss_tl" target="_blank" rel="noreferrer">fancier holographic patterns</a>, too. As long as you can print on it and stick it to another sheet of paper, it works!
+                                    I use <a href="https://www.amazon.com/Sheets-Holographic-Sticker-Printer-Rainbow/dp/B098N8R6P3?dchild=1&keywords=holographic%2Bsticker%2Bpaper%2B50&qid=1629220602&sr=8-3&th=1&linkCode=ll1&tag=imkyle4815-20&linkId=bea3a57f66bcb9a4f34e39c4dd9c8560&language=en_US&ref_=as_li_ss_tl" target="_blank" rel="noreferrer">Holographic Sticker Paper by Qixin</a>. If you're feeling really adventurous, you can check out some <a href="https://www.amazon.com/Holographic-Self-Adhesive-Waterproof-Transparent-Patterns/dp/B098QGYN66?crid=14P2GP20LHQ32&keywords=holographic+sticker+paper&qid=1655685817&sprefix=holographic+sticker+paper+50%2Caps%2C150&sr=8-5&linkCode=ll1&tag=imkyle4815-20&linkId=a95987b533e1589fccd51f720b0b67b7&language=en_US&ref_=as_li_ss_tl" target="_blank" rel="noreferrer">fancier holographic patterns</a>, too. As long as you can print on it and stick it to another sheet of paper, it works! For nonfoil sticker paper, I'm currently using <a href="https://www.amazon.com/gp/product/B082ZDZ894?ie=UTF8&psc=1&linkCode=ll1&tag=imkyle4815-20&linkId=a2a9dd74cf70af49847ec7b60736f6ba&language=en_US&ref_=as_li_ss_tl" target="_blank" rel="noreferrer">this one by JOYEZA</a>.
                                 </li>
                             </ul>
                         </li>
@@ -78,7 +79,7 @@ const PrintingPage = () => {
                             Paper (back)
                             <ul>
                                 <li>
-                                    The easiest backing in the short-term is bulk cards. Just cut out your printed stickers, stick them to bulk cards, and trim the edges with an x-acto knife.
+                                    The easiest backing in the short-term is bulk cards. Just cut out your printed stickers, stick them to bulk cards, and trim the edges with an x-acto knife. Some people recommend using tokens or "ad cards" for the best final thickness.
                                 </li>
                                 <li>
                                     If you want to take things step further, I prefer to stick my printed sheets onto sheets of cardstock, <em>then</em> cut out the cards. I've found that <a href="https://www.amazon.com/Hamilco-White-Cardstock-Thick-Paper/dp/B08RSS4BSH?crid=2GAZM44LIN6TC&keywords=80lb+cardstock&qid=1655686726&s=office-products&sprefix=80lb+cardstock%2Coffice-products%2C148&sr=1-10&linkCode=ll1&tag=imkyle4815-20&linkId=f7e0db8d2485e46ce16f2f0cdb977380&language=en_US&ref_=as_li_ss_tl" target="_blank" rel="noreferrer">80 lb</a> cardstock is a bit flimsy, while <a href="https://www.amazon.com/Black-Cardstock-100Lb-Cover-Sheets/dp/B081B52M3Z?content-id=amzn1.sym.14b5a3ec-ddf3-42f1-bf1e-8515f8d25a34%3Aamzn1.sym.14b5a3ec-ddf3-42f1-bf1e-8515f8d25a34&crid=9I1CCS2ZRC3L&cv_ct_cx=Black%2BCardstock%2B-%2B8.5%2Bx%2B11%2Binch%2B-%2B100Lb%2BCover%2B-%2B50%2BSheets%2B-%2BClear%2BPath%2BPaper&keywords=Black%2BCardstock%2B-%2B8.5%2Bx%2B11%2Binch%2B-%2B100Lb%2BCover%2B-%2B50%2BSheets%2B-%2BClear%2BPath%2BPaper&pd_rd_i=B081B52M3Z&pd_rd_r=312d7464-0118-4f37-beec-09fb8ac8d27f&pd_rd_w=8D5Ju&pd_rd_wg=MRsWe&pf_rd_p=14b5a3ec-ddf3-42f1-bf1e-8515f8d25a34&pf_rd_r=EETXE6BZ5MPXTASJBJ1D&qid=1655686439&sprefix=black%2Bcardstock%2B-%2B8.5%2Bx%2B11%2Binch%2B-%2B100lb%2Bcover%2B-%2B50%2Bsheets%2B-%2Bclear%2Bpath%2Bpaper%2Caps%2C149&sr=1-1-f0029781-b79b-4b60-9cb0-eeda4dea34d6&th=1&linkCode=ll1&tag=imkyle4815-20&linkId=177515ee2fa1a9e141928ca00e79f731&language=en_US&ref_=as_li_ss_tl" target="_blank" rel="noreferrer">100 lb</a> cardstock is a tad thick. I've been custom ordering cardstock from <a href="https://www.superiorpod.com/" target="_blank" rel="noreferrer">Superior POD</a>, though it's more expensive and takes several months to complete.
@@ -119,12 +120,19 @@ const PrintingPage = () => {
                     <p>
                         Whether you use my printing tool or create the printable pages yourself, I recommend printing the cards at 63x88mm. Whether you use bleed edges or add spacing between cards depends on how you're cutting out your cards, and what you prefer. I generally like to fit nine cards on each page, in a 3x3 arrangement.
                     </p>
-                    <h2 id="printing">Printing</h2>
+                    <h2 id="printing">Printing &amp; Cutting</h2>
                     <p>
                         Be ready to waste some paper when you first start. Every printer is different, so take time to experiment and find what works best for your setup. Don't give up, try different settings, and you'll get there.
                     </p>
                     <p>
-                        With holographic sticker paper, or any glossy paper, you'll want to configure your print driver to use the thickest, glossiest setting available. For my Epson ET 2750, I use the "Ultra Premium Photo Paper Glossy" setting. Also make sure to adjust print quality to maximum, and be ready to sacrifice time. My sheets of nine cards take fifteen minutes to print!
+                        With holographic sticker paper, or any glossy paper, you'll want to configure your print driver to use the thickest, glossiest setting available. For my Epson ET 2750, I use the "Ultra Premium Photo Paper Glossy" setting. Also make sure to adjust print quality to maximum, and be ready to sacrifice time. For reference, my sheets of nine cards take fifteen minutes to print!
+                    </p>
+                    <p>
+                        I use the free version of adobe acrobat to print my pdfs, and while your software may vary, consider the following reference:
+                    </p>
+                    <ImageZoomable className="print-page-img" alt="Picture of my suggested print settings" src={require("../img/printingGuide/printSettings.jpg")} />
+                    <p>
+                        The boxes in red point out my most used settings. Make sure to print "actual size" for accurate dimensions. Clicking "properties" will bring up the window on the right, where you can set your paper size, type, and quality. The "maintenance" tab has some more complex settings, like print density, which you may consider experimenting with in the future. Lastly, the "add/remove presets" button is quite useful for saving your settings for one-click readiness.
                     </p>
                     <p>
                         Once you print out your sheet of cards, you have two options for cutting. The first is to cut out the cards, stick them to bulk commons, then trim with an xacto knife. The other option is to first stick the full printed sheet to a sheet of cardstock, then cut.
@@ -133,13 +141,33 @@ const PrintingPage = () => {
                         I recommend starting with bulk cards. The cards are a tad thick and alignment can be tough, but they're nice and firm, and are cheap to make.
                     </p>
                     <p>
-                        Once you get more into proxying, I recommend looking into cardstock. Finding cardstock with just the right rigidity and thickness is difficult - I haven't yet found the perfect product. But if you're not too concerned about having the perfect thickness or rigidity, cardstock is the way to go. It's much easier and faster to cut using a guillotine paper cutter.
+                        Once you get more into proxying, start looking into cardstock. Finding cardstock with just the right rigidity and thickness is difficult - I haven't yet found the perfect product. But if you're not too concerned about having the perfect thickness or rigidity, cardstock is the way to go. It's much easier and faster to cut using a guillotine paper cutter.
                     </p>
                     <p>
-                        Whether you use bulk cards or a sheet of cardstock, be careful when you’re applying the sticker paper. I start by peeling back one corner or edge and stick it to the surface, being careful that it's aligned. Then, once I'm happy with the alignment, I slowly unpeel the backing and roll the sticker paper onto the surface. Go slowly so that no air bubbles get trapped. Also make sure to brush off any surfaces before applying sticker paper so that no dust or debris gets trapped.
+                        Whether you use bulk cards or a sheet of cardstock, be careful when you're applying the sticker paper. I start by peeling back one corner or edge and stick it to the surface, being careful that it's aligned. Then, once I'm happy with the alignment, I slowly unpeel the backing and roll the sticker paper onto the surface. Go slowly so that no air bubbles get trapped. Also make sure to brush off any surfaces before applying sticker paper so that no dust or debris gets trapped.
                     </p>
                     <p>
-                        Once again, this process has a learning curve, so don’t be discouraged by imperfect results. Keep calm and proxy on.
+                        Because guillotine paper cutters are the tool of my choice, I'll go over my cutting process and share some tips.
+                    </p>
+                    <p>
+                        First, I trim the edges if they're wide enough. This isn't necessary, but it makes nice little strips of holographic sticker paper that I like to write on and use as labels.
+                    </p>
+                    <p>
+                        Then, after I stick the sticker paper onto the backing, I use scissors to trim the corners by hand. Since I corner punch the corners anyway, it's okay if I'm not very precise here. I trim the corners because it makes it so much easier to align cuts. With the edges of the cards going right up to the edge of the paper, I can easily see whether the blade is in line with the edges of the cards.
+                    </p>
+                    <ImageZoomable className="print-page-img" alt="Picture of cutting corners for better alignment" src={require("../img/printingGuide/cornerAlignment.jpg")} />
+                    <p>
+                        Another thing I like to do when cutting cards is wear a headlamp. It may seem silly, but illuminating your cards is really important when cutting to make sure you can align everything properly.
+                    </p>
+                    <p>
+                        Once the corners are trimmed, I cut off the excess edges, then make horizontal cuts.
+                    </p>
+                    <ImageZoomable className="print-page-img" alt="Picture of making horizontal cuts first" src={require("../img/printingGuide/cutOrder.jpg")} />
+                    <p>
+                        Finally, I cut out the individual cards from their rows of three, and punch the corners. I like to corner punch three at a time, with the sticker paper facing inwards so it doesn't get scratched by the heavy duty corner puncher.
+                    </p>
+                    <p>
+                        Once again, this process has a learning curve, so don't be discouraged by imperfect results. Keep calm and proxy on.
                     </p>
                     <h2 id="conclusion">Conclusion</h2>
                     <p>
@@ -148,7 +176,7 @@ const PrintingPage = () => {
                     <p>
                         Thanks for sticking around to the end of this guide! I spend a lot of time and money developing these processes, and hosting and updating <a href="https://cardconjurer.com" target="_blank" rel="noreferrer">cardconjurer.com</a>. If I've helped you advance your proxying skills or make some beautifully shiny cards, please consider helping me out by using my affiliate links in <a href="#materials">Required Materials</a>, or supporting me via Patreon or PayPal. Thank you.
                     </p>
-                    <div style={{maxWidth:"720px", marginLeft:"auto", marginRight:"auto"}}>
+                    <div style={{maxWidth:"720px", marginLeft:"auto", marginRight:"auto", marginBottom:"4rem"}}>
                         <Link text="Patreon" url="https://www.patreon.com/KyleBurton" img={require("../img/linkIcons/patreon.svg").default} />
                         <Link text="PayPal" url="https://www.paypal.me/kyleburtondonate" img={require("../img/linkIcons/paypal.svg").default} />
                     </div>

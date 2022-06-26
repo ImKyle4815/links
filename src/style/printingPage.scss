@@ -4,10 +4,11 @@
         text-align: center;
         font-size: 3rem;
         margin-bottom: 0;
+        margin-top: 4rem;
     }
     & > h2 {
         font-size: 2rem;
-        margin-top: 6rem;
+        padding-top: 4rem;
         padding-bottom: 0.5rem;
         border-bottom: 0.125rem solid white;
         // border: 0.25rem solid white;
@@ -19,6 +20,16 @@
         font-size: 1.5rem;
         margin-bottom: 0.5rem;
     }
+}
+
+.print-page-img {
+    display: block;
+    max-width: 36rem;
+    max-height: 50vh;
+    width: 100%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .embeddedTweet {
