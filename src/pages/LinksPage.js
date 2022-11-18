@@ -27,8 +27,8 @@ const LinksPage = () => {
           </div>
           <div style={{maxWidth:"720px", marginLeft:"auto", marginRight:"auto"}}>
             <LinkDiv text="CARDS" />
-            <Link text="Cards For Sale" url="https://shop.imkyle4815.com/" img={require("../img/linkIcons/store.png")} />
-            <Link text="MTG Proxy Gallery (NFS)" url="https://drive.google.com/drive/folders/1YDzy8CTWhb_8dZQMS5CFfzY-0XHxF4GT?usp=sharing" img={require("../img/linkIcons/drive.svg").default} />
+            {/* <Link text="Cards For Sale" url="https://shop.imkyle4815.com/" img={require("../img/linkIcons/store.png")} /> */}
+            {/* <Link text="MTG Proxy Gallery (NFS)" url="https://drive.google.com/drive/folders/1YDzy8CTWhb_8dZQMS5CFfzY-0XHxF4GT?usp=sharing" img={require("../img/linkIcons/drive.svg").default} /> */}
             <Link text="Card Conjurer" url="https://cardconjurer.com/" img={require("../img/linkIcons/cardConjurer.png")} />
             <Link text="Printing Guide" url="/print" img={require("../img/linkIcons/print.png")} sameTab={true} backdrop={true} />
             <LinkDiv text="SUPPORT" />
@@ -38,7 +38,7 @@ const LinksPage = () => {
             <LinkDiv text="MTG" />
             <Link text="Moxfield Decklists" url="https://www.moxfield.com/users/ImKyle4815" img={require("../img/linkIcons/moxfield.png")} backdrop={true} />
             <Link text="Commander Cube" url="https://cubecobra.com/cube/list/kyle" img={require("../img/linkIcons/cubeCobra.png")} />
-            <Link text="Custom Planechase Cards" url="https://drive.google.com/drive/folders/1kw5MKylEBBmeelNDmIcpB1qfbAG2Oe59?usp=sharing" img={require("../img/linkIcons/drive.svg").default} />
+            {/* <Link text="Custom Planechase Cards" url="https://drive.google.com/drive/folders/1kw5MKylEBBmeelNDmIcpB1qfbAG2Oe59?usp=sharing" img={require("../img/linkIcons/drive.svg").default} /> */}
             <LinkDiv text="SOCIAL MEDIA" />
             <Link text="Twitter" url="https://twitter.com/imkyle4815" img={require("../img/linkIcons/twitter.svg").default} />
           </div>
