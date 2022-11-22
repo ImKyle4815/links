@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import './style/style.scss';
 import LinksPage from "./pages/LinksPage";
 import PrintingPage from './pages/PrintingPage';
+import PrintingToolPage from './pages/PrintingToolPage';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,6 +14,7 @@ root.render(
       <div>
         <BrowserRouter>
           <Routes>
+            <Route path="/printTool" element={<PrintingToolPage />} />
             <Route path="/print" element={<PrintingPage />} />
             <Route path="/links" element={<LinksPage />} />
             <Route path="*" element={<LinksPage />} />

@@ -7,7 +7,8 @@ const Footer = (props) => {
                 <h3>Kyle Burton</h3>
                 <nav>
                     <Link to="/">Links</Link> |{" "}
-                    <Link to="/print">Printing Guide</Link>
+                    <Link to="/print">Printing Guide</Link> |{" "}
+                    <Link to="/printTool">Print Page Tool</Link>
                 </nav>
             </div>
         </footer>

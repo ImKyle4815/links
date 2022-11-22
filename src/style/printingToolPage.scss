@@ -1,0 +1,41 @@
+.printingTool {
+    margin: 2rem auto;
+    & > h1 {
+        text-align: center;
+        font-size: 3rem;
+        margin-bottom: 0;
+        margin-top: 4rem;
+    }
+    & > h2 {
+        font-size: 2rem;
+        padding-top: 4rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 0.125rem solid white;
+    }
+    & > p {
+        font-size: 1.5rem;
+    }
+    & > ul > li {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+$pdf-height: 85vh;
+.pdfDoc {
+    aspect-ratio: 17 / 22;
+    width: 100%;
+    height: auto;
+    & > iframe {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.upload {
+    margin: 4rem 0;
+    width: 100%;
+    & > * {
+        width: 100% !important;
+    }
+}

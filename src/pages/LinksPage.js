@@ -31,6 +31,7 @@ const LinksPage = () => {
             {/* <Link text="MTG Proxy Gallery (NFS)" url="https://drive.google.com/drive/folders/1YDzy8CTWhb_8dZQMS5CFfzY-0XHxF4GT?usp=sharing" img={require("../img/linkIcons/drive.svg").default} /> */}
             <Link text="Card Conjurer" url="https://cardconjurer.com/" img={require("../img/linkIcons/cardConjurer.png")} />
             <Link text="Printing Guide" url="/print" img={require("../img/linkIcons/print.png")} sameTab={true} backdrop={true} />
+            <Link text="Print Page Tool" url="/printTool" img={require("../img/linkIcons/print.png")} sameTab={true} backdrop={true} />
             <LinkDiv text="SUPPORT" />
             <Link text="Patreon" url="https://www.patreon.com/KyleBurton" img={require("../img/linkIcons/patreon.svg").default} />
             <Link text="PayPal" url="https://www.paypal.me/kyleburtondonate" img={require("../img/linkIcons/paypal.svg").default} />
@@ -38,6 +39,7 @@ const LinksPage = () => {
             <LinkDiv text="MTG" />
             <Link text="Moxfield Decklists" url="https://www.moxfield.com/users/ImKyle4815" img={require("../img/linkIcons/moxfield.png")} backdrop={true} />
             <Link text="Commander Cube" url="https://cubecobra.com/cube/list/kyle" img={require("../img/linkIcons/cubeCobra.png")} />
+            <Link text="Un Cube" url="https://cubecobra.com/cube/list/root" img={require("../img/linkIcons/cubeCobra.png")} />
             {/* <Link text="Custom Planechase Cards" url="https://drive.google.com/drive/folders/1kw5MKylEBBmeelNDmIcpB1qfbAG2Oe59?usp=sharing" img={require("../img/linkIcons/drive.svg").default} /> */}
             <LinkDiv text="SOCIAL MEDIA" />
             <Link text="Twitter" url="https://twitter.com/imkyle4815" img={require("../img/linkIcons/twitter.svg").default} />
