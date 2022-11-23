@@ -4,6 +4,7 @@ import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import Button from "../components/Button";
 import { jsPDF } from "jspdf";
+import Input from "../components/Input";
 
 //Constants
 const MAX_IMAGE_COUNT = 9;
@@ -217,6 +218,9 @@ const PrintingToolPage = () => {
                 </div>
                 <div style={{marginLeft:"auto", marginRight:"auto", maxWidth:"512px"}}>
                     <Button onClick={downloadPdf} disabled={!canDownload}>Download PDF</Button>
+                </div>
+                <div>
+                    <Input type="number" defaultValue={docProps} onInput={(e) => updateDocProps("pageWidth", parseInt(e.target.value))}></Input>
                 </div>
                 <p style={{textAlign: "center"}}>(Please excuse the *ugly* form)</p>
                 <form className="printingToolForm">

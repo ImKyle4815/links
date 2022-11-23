@@ -1,0 +1,39 @@
+$size: 2.5rem;
+
+.input-component {
+	margin-bottom: 0.5rem;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+}
+
+.input-component-label {
+    z-index: 11;
+    background-color: rgb(16, 16, 16);
+    position: absolute;
+    top: -0.4rem;
+    left: 0.6rem;
+	transition: transform 0.15s;
+	-webkit-transition: transform 0.15s;
+    font-size: 0.8rem;
+    color: #eee;
+}
+
+.input-component-input {
+    z-index: 10;
+    color: white;
+    width: 100%;
+	height: $size;
+	border: 0.125rem solid white;
+	background-color: rgb(16, 16, 16);
+    font-size: 1rem;
+    outline: none;
+    border: none;
+    padding: 0 0.5rem;
+	border: 0.125rem solid white;
+    &:hover, &:focus {
+        // background-color: rgb(20, 20, 20);
+        border-color: $light-green;
+        color: $light-green;
+    }
+}
