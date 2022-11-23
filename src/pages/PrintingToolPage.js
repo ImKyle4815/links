@@ -4,31 +4,47 @@ import { useState } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import Button from "../components/Button";
 import { jsPDF } from "jspdf";
-import Input from "../components/Input";
+import PrintToolInput from "../components/PrintToolInput";
 
 //Constants
 const MAX_IMAGE_COUNT = 9;
 const CORNER_WIDTH = 3;
 const CORNER_LENGTH = 30;
 const PREVIEW_SCALE = 1 / 6;
+const LOCAL_STORAGE_KEY = "printToolDocProps";
 
 const PrintingToolPage = () => {
-    const [docProps, setDocProps] = useState({
-        ppi: 600,
-        pageWidth: 5100,
-        pageHeight: 6600,
-        cardWidth: 1500,
-        cardHeight: 2100,
-        bleedX: 0,
-        bleedY: 0,
-        marginX: 2,
-        marginY: 2,
-        imgIncludesBleedEdge: false,
-        bleedEdgeColor: "black",
-        useCuttingAids: true
-    });
+    const getDocProps = () => {
+        let loadedDocProps = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY));
+        if (!loadedDocProps) {
+            loadedDocProps = {}
+        }
+        return {
+            ppi: loadedDocProps.ppi || 600,
+            pageWidth: loadedDocProps.pageWidth || 5100,
+            pageHeight: loadedDocProps.pageHeight || 6600,
+            cardWidth: loadedDocProps.cardWidth || 1500,
+            cardHeight: loadedDocProps.cardHeight || 2100,
+            bleedX: loadedDocProps.bleedX || 0,
+            bleedY: loadedDocProps.bleedY || 0,
+            marginX: loadedDocProps.marginX || 2,
+            marginY: loadedDocProps.marginY || 2,
+            imgIncludesBleedEdge: loadedDocProps.imgIncludesBleedEdge || false,
+            bleedEdgeColor: loadedDocProps.bleedEdgeColor || "black",
+            useCuttingAids: loadedDocProps.useCuttingAids | true
+        };
+    }
+
+    const [docProps, setDocProps] = useState(getDocProps());
     const [images, setImages] = useState([]);
     const [canDownload, setCanDownload] = useState(true);
+    const [defaultValKey, setDefaultValKey] = useState(1);
+
+    let keyCounter = 0;
+    const autoKey = () => {
+        keyCounter ++;
+        return keyCounter + defaultValKey;
+    }
 
     const uploadImages = (newImagesFileList) => {
         setCanDownload(false);
@@ -72,7 +88,7 @@ const PrintingToolPage = () => {
         setCanDownload(true);
     }
 
-    const updatePreview = (imagesToPreview) => {
+    const updatePreview = (imagesToPreview = images) => {
         const canvas = document.querySelector("canvas");
         if (!canvas) return;
         const context = canvas.getContext("2d");
@@ -198,13 +214,31 @@ const PrintingToolPage = () => {
         updatePreview(images);
     }
 
-    console.log(docProps);
+    const commonInputProps = {
+        docProps: docProps,
+        setDocProps: setDocProps,
+        updatePreview: updatePreview
+    }
+
+    const saveDocProps = () => {
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(docProps));
+    }
+
+    const loadDocProps = () => {
+        setDocProps(getDocProps());
+        setDefaultValKey(defaultValKey + keyCounter);
+        updatePreview();
+    }
+
+    const resetDocProps = () => {
+        localStorage.removeItem(LOCAL_STORAGE_KEY);
+        loadDocProps();
+    }
 
     return (
         <div className="">
             <div className="printingToolPage page-constrained-width">
                 <h1 className="printingToolTitle">Kyle's Print Page Tool</h1>
-                <p style={{textAlign: "center"}}>(Work in progress)</p>
                 <div className="upload">
                     <FileUploader 
                         multiple={true}
@@ -219,48 +253,26 @@ const PrintingToolPage = () => {
                 <div style={{marginLeft:"auto", marginRight:"auto", maxWidth:"512px"}}>
                     <Button onClick={downloadPdf} disabled={!canDownload}>Download PDF</Button>
                 </div>
-                <div>
-                    <Input type="number" defaultValue={docProps} onInput={(e) => updateDocProps("pageWidth", parseInt(e.target.value))}></Input>
-                </div>
-                <p style={{textAlign: "center"}}>(Please excuse the *ugly* form)</p>
-                <form className="printingToolForm">
-                    <label className="printingToolFormLabel">Page width:
-                        <input type="number" defaultValue={docProps.pageWidth} onInput={(e) => updateDocProps("pageWidth", parseInt(e.target.value))} />
-                    </label>
-                    <label className="printingToolFormLabel">Page height:
-                        <input type="number" defaultValue={docProps.pageHeight} onInput={(e) => updateDocProps("pageHeight", parseInt(e.target.value))} />
-                    </label>
-                    <br />
-                    <label className="printingToolFormLabel">Card width:
-                        <input type="number" defaultValue={docProps.cardWidth} onInput={(e) => updateDocProps("cardWidth", parseInt(e.target.value))} />
-                    </label>
-                    <label className="printingToolFormLabel">Card height:
-                        <input type="number" defaultValue={docProps.cardHeight} onInput={(e) => updateDocProps("cardHeight", parseInt(e.target.value))} />
-                    </label>
-                    <br />
-                    <label className="printingToolFormLabel">Bleed width:
-                        <input type="number" defaultValue={docProps.bleedX} onInput={(e) => updateDocProps("bleedX", parseInt(e.target.value))} />
-                    </label>
-                    <label className="printingToolFormLabel">Bleed height:
-                        <input type="number" defaultValue={docProps.bleedY} onInput={(e) => updateDocProps("bleedY", parseInt(e.target.value))} />
-                    </label>
-                    <br />
-                    <label className="printingToolFormLabel">Margin:
-                        <input type="number" defaultValue={docProps.marginX} onInput={(e) => {updateDocProps("marginX", parseInt(e.target.value));updateDocProps("marginY", parseInt(e.target.value))}} />
-                    </label>
-                    <br />
-                    <label className="printingToolFormLabel">PPI:
-                        <input type="number" defaultValue={docProps.ppi} onInput={(e) => updateDocProps("ppi", parseInt(e.target.value))} />
-                    </label>
-                    <br />
-                    <label className="printingToolFormLabel">Use Cutting Guides:
+                <div className="printingToolForm">
+                    <PrintToolInput key={autoKey()} className="inputPair" name="Page Width (px)" docPropsKey="pageWidth" type="number" {...commonInputProps}></PrintToolInput>
+                    <PrintToolInput key={autoKey()} className="inputPair" name="Page Height (px)" docPropsKey="pageHeight" type="number" {...commonInputProps}></PrintToolInput>
+                    <PrintToolInput key={autoKey()} className="inputPair" name="Card Width (px)" docPropsKey="cardWidth" type="number" {...commonInputProps}></PrintToolInput>
+                    <PrintToolInput key={autoKey()} className="inputPair" name="Card Height (px)" docPropsKey="cardHeight" type="number" {...commonInputProps}></PrintToolInput>
+                    <PrintToolInput key={autoKey()} className="inputPair" name="Horizontal Bleed (px)" docPropsKey="bleedX" type="number" {...commonInputProps}></PrintToolInput>
+                    <PrintToolInput key={autoKey()} className="inputPair" name="Vertical Bleed (px)" docPropsKey="bleedY" type="number" {...commonInputProps}></PrintToolInput>
+                    <PrintToolInput key={autoKey()} className="inputPair" name="Horizontal Margin (px)" docPropsKey="marginX" type="number" {...commonInputProps}></PrintToolInput>
+                    <PrintToolInput key={autoKey()} className="inputPair" name="Vertical Margin (px)" docPropsKey="marginY" type="number" {...commonInputProps}></PrintToolInput>
+                    {/* <PrintToolInput key={autoKey()} name="Pixels Per Inch" docPropsKey="ppi" type="number" {...commonInputProps}></PrintToolInput> */}
+                    <label key={autoKey()} className="printingToolCheckbox">Use Cutting Guides:
                         <input type="checkbox" defaultChecked={docProps.useCuttingAids} onInput={(e) => updateDocProps("useCuttingAids", parseInt(e.target.checked))} />
                     </label>
-                    <br />
-                    <label className="printingToolFormLabel">Bleed edge included in image:
+                    <label key={autoKey()} className="printingToolCheckbox">Bleed edge included in image:
                         <input type="checkbox" defaultChecked={docProps.imgIncludesBleedEdge} onInput={(e) => updateDocProps("imgIncludesBleedEdge", parseInt(e.target.checked))} />
                     </label>
-                </form>
+                    <Button onClick={saveDocProps} disabled={!canDownload}>Save Current Settings</Button>
+                    <Button onClick={loadDocProps} disabled={!canDownload}>Load Saved Settings</Button>
+                    <Button onClick={resetDocProps} disabled={!canDownload}>Reset Saved Settings</Button>
+                </div>
             </div>
             <Footer />
         </div>
