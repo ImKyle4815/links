@@ -1,8 +1,8 @@
-const Link = ( props ) => {
+const Link = ( { url, sameTab, img, backdrop, text } ) => {
     return (
-        <a className="link-component" href={props.url} target={props.sameTab ? "" : "_blank"} rel="noreferrer">
-			<img src={props.img} alt="O" className={props.backdrop ? "link-img-backdrop" : ""} />
-			<span>{props.text}</span>
+        <a className="link-component" href={url} target={sameTab ? "" : "_blank"} rel="noreferrer">
+			<img src={img} alt="O" className={backdrop ? "link-img-backdrop" : ""} />
+			<span>{text}</span>
 		</a>
     );
 };

@@ -2,13 +2,13 @@
 $light-green: rgb(200, 255, 200);
 
 /* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;900&display=swap');
 /* Component Imports */
 @import './links.scss';
 @import './linkDiv.scss';
 @import './footer.scss';
 @import './imageZoomable.scss';
+@import './buttonComponent.scss';
 
 /* Generic Styling */
 ::-webkit-scrollbar {
@@ -29,6 +29,10 @@ body {
     font-family: 'Montserrat', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    font-weight: 400;
 }
 
 a {

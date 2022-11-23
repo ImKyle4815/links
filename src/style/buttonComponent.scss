@@ -1,8 +1,6 @@
 $size: 2.5rem;
 
-.link-component {
-	display: grid;
-	grid-template-columns: $size auto $size;
+.button-component {
 	height: $size;
     width: 100%;
 	padding: 0.25rem;
@@ -14,30 +12,16 @@ $size: 2.5rem;
 	background-color: rgb(16, 16, 16);
     cursor: pointer;
     color: white;
-    text-decoration: none;
 	transition: transform 0.15s;
 	-webkit-transition: transform 0.15s;
-    &:hover {
+    &:hover:enabled {
         background-color: rgb(20, 20, 20);
         -webkit-transform: scale(1.04);
         transform: scale(1.04);
         -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 3);
         transition-timing-function: cubic-bezier(0, 1, 0.5, 3);
         border-color: $light-green;
-    }
-    & > img {
-        width: $size;
-        height: $size;
-        object-fit: contain;
-        -webkit-user-select: none;
-        -khtml-user-select: none;
-        -moz-user-select: none;
-        -o-user-select: none;
-        user-select: none;
-    }
-    & > img.link-img-backdrop {
-        border-radius: calc($size / 2);
-        background-color: white;
+        color: $light-green;
     }
     & > span {
         margin: auto;
@@ -48,5 +32,10 @@ $size: 2.5rem;
         overflow: hidden;
         text-overflow: ellipsis;
         font-size: calc($size / 2);
+    }
+    &:disabled {
+        border-color: gray;
+        color: gray;
+        cursor: not-allowed;
     }
 }
