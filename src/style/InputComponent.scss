@@ -26,7 +26,7 @@ $label-break-point: 60%;
 .input-component-input {
     z-index: 10;
     color: white;
-    width: calc(100% - 1rem);
+    width: calc(100% - 1.25rem);
 	height: $size;
 	border: 0.125rem solid white;
 	background-color: $input-background-color;
@@ -40,4 +40,8 @@ $label-break-point: 60%;
         border-color: $light-green;
         color: $light-green;
     }
+}
+select.input-component-input {
+    width: 100%;
+    cursor: pointer;
 }

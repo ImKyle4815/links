@@ -5,6 +5,7 @@ import { FileUploader } from "react-drag-drop-files";
 import Button from "../components/Button";
 import { jsPDF } from "jspdf";
 import PrintToolInput from "../components/PrintToolInput";
+import Select from "../components/Select";
 
 //Constants
 const MAX_IMAGE_COUNT = 9;
@@ -208,10 +209,13 @@ const PrintingToolPage = () => {
         });
     }
 
-    const updateDocProps = (field, value) => {
-        docProps[field] = value;
+    const updateDocProps = (newProps, rerenderDefaultInputs = false) => {
+        for (let key in newProps) {
+            docProps[key] = newProps[key];
+        }
         setDocProps(docProps);
-        updatePreview(images);
+        updatePreview();
+        if (rerenderDefaultInputs) setDefaultValKey(defaultValKey + keyCounter);
     }
 
     const commonInputProps = {
@@ -254,6 +258,7 @@ const PrintingToolPage = () => {
                     <Button onClick={downloadPdf} disabled={!canDownload}>Download PDF</Button>
                 </div>
                 <div className="printingToolForm">
+                    <h2 className="center">Layout Options</h2>
                     <PrintToolInput key={autoKey()} className="inputPair" name="Page Width (px)" docPropsKey="pageWidth" type="number" {...commonInputProps}></PrintToolInput>
                     <PrintToolInput key={autoKey()} className="inputPair" name="Page Height (px)" docPropsKey="pageHeight" type="number" {...commonInputProps}></PrintToolInput>
                     <PrintToolInput key={autoKey()} className="inputPair" name="Card Width (px)" docPropsKey="cardWidth" type="number" {...commonInputProps}></PrintToolInput>
@@ -264,14 +269,48 @@ const PrintingToolPage = () => {
                     <PrintToolInput key={autoKey()} className="inputPair" name="Vertical Margin (px)" docPropsKey="marginY" type="number" {...commonInputProps}></PrintToolInput>
                     {/* <PrintToolInput key={autoKey()} name="Pixels Per Inch" docPropsKey="ppi" type="number" {...commonInputProps}></PrintToolInput> */}
                     <label key={autoKey()} className="printingToolCheckbox">Use Cutting Guides:
-                        <input type="checkbox" defaultChecked={docProps.useCuttingAids} onInput={(e) => updateDocProps("useCuttingAids", parseInt(e.target.checked))} />
+                        <input type="checkbox" defaultChecked={docProps.useCuttingAids} onInput={(e) => updateDocProps({"useCuttingAids": parseInt(e.target.checked)})} />
                     </label>
                     <label key={autoKey()} className="printingToolCheckbox">Bleed edge included in image:
-                        <input type="checkbox" defaultChecked={docProps.imgIncludesBleedEdge} onInput={(e) => updateDocProps("imgIncludesBleedEdge", parseInt(e.target.checked))} />
+                        <input type="checkbox" defaultChecked={docProps.imgIncludesBleedEdge} onInput={(e) => updateDocProps({"imgIncludesBleedEdge": parseInt(e.target.checked)})} />
                     </label>
-                    <Button onClick={saveDocProps} disabled={!canDownload}>Save Current Settings</Button>
-                    <Button onClick={loadDocProps} disabled={!canDownload}>Load Saved Settings</Button>
-                    <Button onClick={resetDocProps} disabled={!canDownload}>Reset Saved Settings</Button>
+                    <h2 className="center">Save/Load Default Layout</h2>
+                    <Button onClick={saveDocProps} disabled={!canDownload}>Save Current Layout</Button>
+                    <Button onClick={loadDocProps} disabled={!canDownload}>Load Saved Layout</Button>
+                    <Button onClick={resetDocProps} disabled={!canDownload}>Reset Saved Layout</Button>
+                    <h2 className="center">Preset Page/Card Sizes</h2>
+                    <Select className="inputPair" label="Page Size" onChange={(e) => {
+                        const [width, height] = e.target.value.split(",").map((num) => {
+                            return Math.round(parseFloat(num) * docProps.ppi);
+                        });
+                        updateDocProps({
+                            pageWidth: width,
+                            pageHeight: height
+                        }, true);
+                    }}>
+                        <option disabled={true} selected={true}>Select a Page Size</option>
+                        <option value="8.5,11">Letter (8.5 x 11 in)</option>
+                        <option value="8.26772,11.6929">A4 (210 x 297 mm)</option>
+                    </Select>
+                    <Select className="inputPair" label="Card Size" onChange={(e) => {
+                        const [width, height] = e.target.value.split(",").map((num) => {
+                            return Math.round(parseFloat(num) * docProps.ppi);
+                        });
+                        updateDocProps({
+                            cardWidth: width,
+                            cardHeight: height
+                        }, true);
+                    }}>
+                        <option disabled={true} selected={true}>Select a Card Size</option>
+                        <option value="2.5,3.5">Poker (2.5 x 3.5 in)</option>
+                        <option value="2.48031,3.46457">Poker (63 x 88 mm)</option>
+                    </Select>
+                    <Button onClick={() => {
+                        updateDocProps({
+                            pageWidth: docProps.pageHeight,
+                            pageHeight: docProps.pageWidth
+                        }, true);
+                    }} disabled={!canDownload}>Toggle Page Orientation</Button>
                 </div>
             </div>
             <Footer />

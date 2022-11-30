@@ -13,6 +13,6 @@ export default function PrintToolInput( { name, docPropsKey, type, docProps, set
     if (type === "checked") defaults = {defaultChecked: docProps[docPropsKey]};
 
     return (
-        <Input {...defaults} {...{className, type}} label={name} onInput={updateDocProps}></Input>
+        <Input {...defaults} {...{className, type}} label={name} onInput={updateDocProps} inputId={docPropsKey + "-input"}></Input>
     );
 };
