@@ -1,6 +1,6 @@
 import "../style/printingToolPage.scss";
 import Footer from "../components/Footer";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FileUploader } from "react-drag-drop-files";
 import Button from "../components/Button";
 import { jsPDF } from "jspdf";
@@ -35,6 +35,8 @@ const PrintingToolPage = () => {
             useCuttingAids: loadedDocProps.useCuttingAids | true
         };
     }
+
+
 
     const [docProps, setDocProps] = useState(getDocProps());
     const [images, setImages] = useState([]);
@@ -238,6 +240,10 @@ const PrintingToolPage = () => {
         localStorage.removeItem(LOCAL_STORAGE_KEY);
         loadDocProps();
     }
+
+    useEffect(() => {
+        updatePreview();
+    }, []);
 
     return (
         <div className="">
