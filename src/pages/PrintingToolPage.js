@@ -274,7 +274,7 @@ const PrintingToolPage = () => {
                     <label key={autoKey()} className="printingToolCheckbox">Bleed edge included in image:
                         <input type="checkbox" defaultChecked={docProps.imgIncludesBleedEdge} onInput={(e) => updateDocProps({"imgIncludesBleedEdge": parseInt(e.target.checked)})} />
                     </label>
-                    <h2 className="center">Save/Load Default Layout</h2>
+                    <h2 className="center">Save/Load Layout Options</h2>
                     <Button onClick={saveDocProps} disabled={!canDownload}>Save Current Layout</Button>
                     <Button onClick={loadDocProps} disabled={!canDownload}>Load Saved Layout</Button>
                     <Button onClick={resetDocProps} disabled={!canDownload}>Reset Saved Layout</Button>
