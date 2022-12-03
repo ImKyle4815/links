@@ -49,6 +49,10 @@ const PrintingToolPage = () => {
         return keyCounter + defaultValKey;
     }
 
+    const pxToDocUnits = (px) => {
+        return px / docProps.ppi * 72;
+    }
+
     const uploadImages = (newImagesFileList) => {
         setCanDownload(false);
         const readers = [];
@@ -109,7 +113,11 @@ const PrintingToolPage = () => {
 
     const generatePdf = async () => {
         // Create the PDF
-        const pdf = new jsPDF("p", "px", [docProps.pageWidth, docProps.pageHeight]);
+        const pdf = new jsPDF({
+            orientation: "p",
+            unit: "pt", 
+            format: [docProps.pageWidth / docProps.ppi * 72, docProps.pageHeight / docProps.ppi * 72]
+        });
         pdf.setDrawColor(0);
         // Compute positions
         const pageLayout = computePageLayout();
@@ -121,34 +129,34 @@ const PrintingToolPage = () => {
                 pdf.setFillColor("black");
                 // First card in a row
                 if (index % pageLayout.numCardsX === 0) {
-                    pdf.rect(0, pos.cut.y - 1, (docProps.pageWidth), 2, "F");
-                    pdf.rect(0, pos.cut.y + pos.cut.height - 1, (docProps.pageWidth), 2, "F");
+                    pdf.rect(0, pxToDocUnits(pos.cut.y - 1), pxToDocUnits(docProps.pageWidth), pxToDocUnits(2), "F");
+                    pdf.rect(0, pxToDocUnits(pos.cut.y + pos.cut.height - 1), pxToDocUnits(docProps.pageWidth), pxToDocUnits(2), "F");
                 }
                 // First card in a column
                 if (Math.floor(index / pageLayout.numCardsY) % pageLayout.numCardsY === 0) {
-                    pdf.rect(pos.cut.x - 1, 0, 2, (docProps.pageHeight), "F");
-                    pdf.rect(pos.cut.x + pos.cut.width - 1, 0, 2, (docProps.pageHeight), "F");
+                    pdf.rect(pxToDocUnits(pos.cut.x - 1), 0, pxToDocUnits(2), pxToDocUnits(docProps.pageHeight), "F");
+                    pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - 1), 0, pxToDocUnits(2), pxToDocUnits(docProps.pageHeight), "F");
                 }
             }
             // Bleed edge (if not in the image)
             if (!docProps.imgIncludesBleedEdge) {
                 pdf.setFillColor(docProps.bleedEdgeColor);
-                pdf.rect(pos.bleed.x, pos.bleed.y, pos.bleed.width, pos.bleed.height, "F");
+                pdf.rect(pxToDocUnits(pos.bleed.x), pxToDocUnits(pos.bleed.y), pxToDocUnits(pos.bleed.width), pxToDocUnits(pos.bleed.height), "F");
             }
             // Card image
-            await pdf.addImage(image, "PNG", pos.img.x, pos.img.y, pos.img.width, pos.img.height);
+            await pdf.addImage(image, "PNG", pxToDocUnits(pos.img.x), pxToDocUnits(pos.img.y), pxToDocUnits(pos.img.width), pxToDocUnits(pos.img.height));
             // Cut guides (corners)
             if (docProps.useCuttingAids) {
                 pdf.setFillColor("magenta");
-                pdf.rect(pos.cut.x, pos.cut.y, CORNER_LENGTH, CORNER_WIDTH, "F");
-                pdf.rect(pos.cut.x, pos.cut.y, CORNER_WIDTH, CORNER_LENGTH, "F");
-                pdf.rect(pos.cut.x + pos.cut.width - CORNER_LENGTH, pos.cut.y + pos.cut.height - CORNER_WIDTH, CORNER_LENGTH, CORNER_WIDTH, "F");
-                pdf.rect(pos.cut.x + pos.cut.width - CORNER_WIDTH, pos.cut.y + pos.cut.height - CORNER_LENGTH, CORNER_WIDTH, CORNER_LENGTH, "F");
+                pdf.rect(pxToDocUnits(pos.cut.x), pxToDocUnits(pos.cut.y), pxToDocUnits(CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), "F");
+                pdf.rect(pxToDocUnits(pos.cut.x), pxToDocUnits(pos.cut.y), pxToDocUnits(CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), "F");
+                pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - CORNER_LENGTH), pxToDocUnits(pos.cut.y + pos.cut.height - CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), "F");
+                pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - CORNER_WIDTH), pxToDocUnits(pos.cut.y + pos.cut.height - CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), "F");
                 pdf.setFillColor("green");
-                pdf.rect(pos.cut.x + pos.cut.width - CORNER_LENGTH, pos.cut.y, CORNER_LENGTH, CORNER_WIDTH, "F");
-                pdf.rect(pos.cut.x + pos.cut.width - CORNER_WIDTH, pos.cut.y, CORNER_WIDTH, CORNER_LENGTH, "F");
-                pdf.rect(pos.cut.x, pos.cut.y + pos.cut.height - CORNER_WIDTH, CORNER_LENGTH, CORNER_WIDTH, "F");
-                pdf.rect(pos.cut.x, pos.cut.y + pos.cut.height - CORNER_LENGTH, CORNER_WIDTH, CORNER_LENGTH, "F");
+                pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - CORNER_LENGTH), pxToDocUnits(pos.cut.y), pxToDocUnits(CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), "F");
+                pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - CORNER_WIDTH), pxToDocUnits(pos.cut.y), pxToDocUnits(CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), "F");
+                pdf.rect(pxToDocUnits(pos.cut.x), pxToDocUnits(pos.cut.y + pos.cut.height - CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), "F");
+                pdf.rect(pxToDocUnits(pos.cut.x), pxToDocUnits(pos.cut.y + pos.cut.height - CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), "F");
             }
         }
         // Return the pdf
@@ -273,7 +281,7 @@ const PrintingToolPage = () => {
                     <PrintToolInput key={autoKey()} className="inputPair" name="Vertical Bleed (px)" docPropsKey="bleedY" type="number" {...commonInputProps}></PrintToolInput>
                     <PrintToolInput key={autoKey()} className="inputPair" name="Horizontal Margin (px)" docPropsKey="marginX" type="number" {...commonInputProps}></PrintToolInput>
                     <PrintToolInput key={autoKey()} className="inputPair" name="Vertical Margin (px)" docPropsKey="marginY" type="number" {...commonInputProps}></PrintToolInput>
-                    {/* <PrintToolInput key={autoKey()} name="Pixels Per Inch" docPropsKey="ppi" type="number" {...commonInputProps}></PrintToolInput> */}
+                    <PrintToolInput key={autoKey()} name="Pixels Per Inch" docPropsKey="ppi" type="number" {...commonInputProps}></PrintToolInput>
                     <label key={autoKey()} className="printingToolCheckbox">Use Cutting Guides:
                         <input type="checkbox" defaultChecked={docProps.useCuttingAids} onInput={(e) => updateDocProps({"useCuttingAids": parseInt(e.target.checked)})} />
                     </label>
