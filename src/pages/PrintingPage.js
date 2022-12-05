@@ -49,7 +49,7 @@ const PrintingPage = () => {
                         <li>The artist is properly credited</li>
                     </ul>
                     <p>
-                        To be clear, I cannot guarantee that these conditions are sufficient; they are just the bare minimum requirements that I and most of the proxy community have determined.
+                        To be clear, I cannot guarantee that these conditions are sufficient; they are just the bare minimum requirements that I and most of the proxy community have determined. In fact, they weren't sufficient for my website Card Conjurer, which <a href="https://twitter.com/ImKyle4815/status/1593658806201856001?s=20&t=cKMdRDlaXZMqa3xl4nHPEA" target="_blank" rel="noreferrer">received a C&D in November 2022</a>...
                     </p>
                     <p>
                         These are the rules I follow when making proxies. I do not sell any proxies containing intellectual property I don't have the rights to <em>(including but not limited to mana symbols, official fonts, rules text, trademarked keywords, art, and so much more)</em>.
@@ -105,17 +105,17 @@ const PrintingPage = () => {
                     </ul>
                     <h2 id="digital">Making Digital Proxies</h2>
                     <p>
-                        I make all of my proxies on my website <a href="https://cardconjurer.com" target="_blank" rel="noreferrer">cardconjurer.com</a>, and of course, I highly recommend it. There's a bit of a learning curve, but it's well worth it.
+                        I used to make all of my proxies on my website <a href="https://cardconjurer.com" target="_blank" rel="noreferrer">cardconjurer.com</a>, but that's not an option anymore... stay tuned and I hope to bring it back in a new form!
                     </p>
-                    <p>
+                    {/* <p>
                         You can also just view my <a href="https://drive.google.com/drive/folders/1YDzy8CTWhb_8dZQMS5CFfzY-0XHxF4GT?usp=sharing" target="_blank" rel="noreferrer">proxy gallery</a> and download whatever you'd like to print.
-                    </p>
+                    </p> */}
                     <p>
                         If you prefer a more hands-on approach, go wild. I like to work at 600dpi, which is approximately 1500x2100px, though this is for 2.5x3.5" cards. A more accurate measurement is 63x88mm, which comes out to 1488x2079px.
                     </p>
                     <h2 id="page-prep">Preparing Print Pages</h2>
                     <p>
-                        I use <a href="https://cardconjurer.com/print" target="_blank" rel="noreferrer">cardconjurer.com/print</a> to make my print pages, and I download the pdf. I'll update this guide later, but in the meantime, here is <a href="https://twitter.com/ImKyle4815/status/1471564568388255744" target="_blank" rel="noreferrer">my thread on Twitter</a> that describes how to use it.
+                        I have a <a href="/printTool">printing tool</a> to make my print pages, and I download the pdf. I'll update this guide later, but in the meantime, here is <a href="https://twitter.com/ImKyle4815/status/1471564568388255744" target="_blank" rel="noreferrer">my thread on Twitter</a> that describes how to use the old version, which used to be on Card Conjurer.
                     </p>
                     <p>
                         Whether you use my printing tool or create the printable pages yourself, I recommend printing the cards at 63x88mm. Whether you use bleed edges or add spacing between cards depends on how you're cutting out your cards, and what you prefer. I generally like to fit nine cards on each page, in a 3x3 arrangement.
