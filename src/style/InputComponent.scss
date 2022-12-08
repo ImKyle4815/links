@@ -29,6 +29,7 @@ $label-break-point: 60%;
     width: calc(100% - 1.25rem);
 	height: $size;
 	border: 0.125rem solid white;
+    border-radius: 0.125rem;
 	background-color: $input-background-color;
     font-size: 1rem;
     outline: none;

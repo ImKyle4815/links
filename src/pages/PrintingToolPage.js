@@ -283,10 +283,10 @@ const PrintingToolPage = () => {
                     <PrintToolInput key={autoKey()} className="inputPair" name="Vertical Margin (px)" docPropsKey="marginY" type="number" {...commonInputProps}></PrintToolInput>
                     <PrintToolInput key={autoKey()} name="Pixels Per Inch" docPropsKey="ppi" type="number" {...commonInputProps}></PrintToolInput>
                     <label key={autoKey()} className="printingToolCheckbox">Use Cutting Guides:
-                        <input type="checkbox" defaultChecked={docProps.useCuttingAids} onInput={(e) => updateDocProps({"useCuttingAids": parseInt(e.target.checked)})} />
+                        <input type="checkbox" defaultChecked={docProps.useCuttingAids} onInput={(e) => updateDocProps({"useCuttingAids": e.target.checked})} />
                     </label>
                     <label key={autoKey()} className="printingToolCheckbox">Bleed edge included in image:
-                        <input type="checkbox" defaultChecked={docProps.imgIncludesBleedEdge} onInput={(e) => updateDocProps({"imgIncludesBleedEdge": parseInt(e.target.checked)})} />
+                        <input type="checkbox" defaultChecked={docProps.imgIncludesBleedEdge} onInput={(e) => updateDocProps({"imgIncludesBleedEdge": e.target.checked})} />
                     </label>
                     <h2 className="center">Save/Load Layout Options</h2>
                     <Button onClick={saveDocProps} disabled={!canDownload}>Save Current Layout</Button>
