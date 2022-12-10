@@ -114,7 +114,7 @@ const PrintingToolPage = () => {
     const generatePdf = async () => {
         // Create the PDF
         const pdf = new jsPDF({
-            orientation: "p",
+            orientation: (docProps.pageWidth < docProps.pageHeight ? "p" : "l"),
             unit: "pt", 
             format: [docProps.pageWidth / docProps.ppi * 72, docProps.pageHeight / docProps.ppi * 72]
         });
@@ -171,8 +171,8 @@ const PrintingToolPage = () => {
         const numCardsX = Math.floor(docProps.pageWidth / totalCardWidth);
         const numCardsY = Math.floor(docProps.pageHeight / totalCardHeight);
         // The page margin equals half of the remaining space
-        const pageMarginX = Math.floor((docProps.pageWidth - numCardsX * totalCardWidth - docProps.marginX) / 2);
-        const pageMarginY = Math.floor((docProps.pageHeight - numCardsY * totalCardHeight - docProps.marginY) / 2);
+        const pageMarginX = Math.floor((docProps.pageWidth - numCardsX * totalCardWidth + docProps.marginX) / 2);
+        const pageMarginY = Math.floor((docProps.pageHeight - numCardsY * totalCardHeight + docProps.marginY) / 2);
 
         return {
             totalCardWidth: totalCardWidth,
