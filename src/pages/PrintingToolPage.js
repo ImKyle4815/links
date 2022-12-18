@@ -32,11 +32,10 @@ const PrintingToolPage = () => {
             marginY: loadedDocProps.marginY || 2,
             imgIncludesBleedEdge: loadedDocProps.imgIncludesBleedEdge || false,
             bleedEdgeColor: loadedDocProps.bleedEdgeColor || "black",
-            useCuttingAids: loadedDocProps.useCuttingAids | true
+            useCuttingAids: loadedDocProps.useCuttingAids || true,
+            cutLinesAtop: loadedDocProps.cutLinesAtop || false,
         };
     }
-
-
 
     const [docProps, setDocProps] = useState(getDocProps());
     const [images, setImages] = useState([]);
@@ -121,46 +120,64 @@ const PrintingToolPage = () => {
         pdf.setDrawColor(0);
         // Compute positions
         const pageLayout = computePageLayout();
-        // Draw the lines and possibly the bleed
+        // Collect image information
+        const imgs = [];
         for (const [index, image] of images.entries()) {
-            const pos = computePositions(index, pageLayout);
-            // cut lines
-            if (docProps.useCuttingAids) {
-                pdf.setFillColor("black");
-                // First card in a row
-                if (index % pageLayout.numCardsX === 0) {
-                    pdf.rect(0, pxToDocUnits(pos.cut.y - 1), pxToDocUnits(docProps.pageWidth), pxToDocUnits(2), "F");
-                    pdf.rect(0, pxToDocUnits(pos.cut.y + pos.cut.height - 1), pxToDocUnits(docProps.pageWidth), pxToDocUnits(2), "F");
-                }
-                // First card in a column
-                if (Math.floor(index / pageLayout.numCardsY) % pageLayout.numCardsY === 0) {
-                    pdf.rect(pxToDocUnits(pos.cut.x - 1), 0, pxToDocUnits(2), pxToDocUnits(docProps.pageHeight), "F");
-                    pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - 1), 0, pxToDocUnits(2), pxToDocUnits(docProps.pageHeight), "F");
-                }
-            }
-            // Bleed edge (if not in the image)
-            if (!docProps.imgIncludesBleedEdge) {
-                pdf.setFillColor(docProps.bleedEdgeColor);
-                pdf.rect(pxToDocUnits(pos.bleed.x), pxToDocUnits(pos.bleed.y), pxToDocUnits(pos.bleed.width), pxToDocUnits(pos.bleed.height), "F");
-            }
-            // Card image
-            await pdf.addImage(image, "PNG", pxToDocUnits(pos.img.x), pxToDocUnits(pos.img.y), pxToDocUnits(pos.img.width), pxToDocUnits(pos.img.height));
-            // Cut guides (corners)
-            if (docProps.useCuttingAids) {
-                pdf.setFillColor("magenta");
-                pdf.rect(pxToDocUnits(pos.cut.x), pxToDocUnits(pos.cut.y), pxToDocUnits(CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), "F");
-                pdf.rect(pxToDocUnits(pos.cut.x), pxToDocUnits(pos.cut.y), pxToDocUnits(CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), "F");
-                pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - CORNER_LENGTH), pxToDocUnits(pos.cut.y + pos.cut.height - CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), "F");
-                pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - CORNER_WIDTH), pxToDocUnits(pos.cut.y + pos.cut.height - CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), "F");
-                pdf.setFillColor("green");
-                pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - CORNER_LENGTH), pxToDocUnits(pos.cut.y), pxToDocUnits(CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), "F");
-                pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - CORNER_WIDTH), pxToDocUnits(pos.cut.y), pxToDocUnits(CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), "F");
-                pdf.rect(pxToDocUnits(pos.cut.x), pxToDocUnits(pos.cut.y + pos.cut.height - CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), "F");
-                pdf.rect(pxToDocUnits(pos.cut.x), pxToDocUnits(pos.cut.y + pos.cut.height - CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), "F");
-            }
+            // If the number of images exceeds the viewable area, quit early
+            if (index >= pageLayout.numCardsX * pageLayout.numCardsY) break;
+            imgs.push({
+                image: image,
+                index: index,
+                pos: computePositions(index, pageLayout)
+            });
         }
+        // Draw the cut lines below the images
+        if (docProps.useCuttingAids && !docProps.cutLinesAtop) for (let img of imgs) await drawCutLinePDF(pdf, pageLayout, img.index, img.pos);
+        // Draw the images
+        for (let img of imgs) await drawCardPDF(pdf, img.pos, img.image);
+        // Draw the cut lines above the images
+        if (docProps.useCuttingAids && docProps.cutLinesAtop) for (let img of imgs) await drawCutLinePDF(pdf, pageLayout, img.index, img.pos);
+        // Draw the cut corners
+        if (docProps.useCuttingAids) for (let img of imgs) await drawCutCornerPDF(pdf, img.pos);
         // Return the pdf
         return pdf;
+    }
+
+    const drawCardPDF = async (pdf, pos, image) => {
+        // Bleed edge (if not in the image)
+        if (!docProps.imgIncludesBleedEdge) {
+            pdf.setFillColor(docProps.bleedEdgeColor);
+            pdf.rect(pxToDocUnits(pos.bleed.x), pxToDocUnits(pos.bleed.y), pxToDocUnits(pos.bleed.width), pxToDocUnits(pos.bleed.height), "F");
+        }
+        // Card image
+        await pdf.addImage(image, "PNG", pxToDocUnits(pos.img.x), pxToDocUnits(pos.img.y), pxToDocUnits(pos.img.width), pxToDocUnits(pos.img.height));
+    }
+
+    const drawCutLinePDF = async (pdf, pageLayout, index, pos) => {
+        pdf.setFillColor("black");
+        // First card in a row
+        if (index % pageLayout.numCardsX === 0) {
+            pdf.rect(0, pxToDocUnits(pos.cut.y - 1), pxToDocUnits(docProps.pageWidth), pxToDocUnits(2), "F");
+            pdf.rect(0, pxToDocUnits(pos.cut.y + pos.cut.height - 1), pxToDocUnits(docProps.pageWidth), pxToDocUnits(2), "F");
+        }
+        // First card in a column
+        if (Math.floor(index / pageLayout.numCardsX) % pageLayout.numCardsY === 0) {
+            pdf.rect(pxToDocUnits(pos.cut.x - 1), 0, pxToDocUnits(2), pxToDocUnits(docProps.pageHeight), "F");
+            pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - 1), 0, pxToDocUnits(2), pxToDocUnits(docProps.pageHeight), "F");
+        }
+    }
+
+    const drawCutCornerPDF = async (pdf, pos) => {
+        pdf.setFillColor("magenta");
+        pdf.rect(pxToDocUnits(pos.cut.x), pxToDocUnits(pos.cut.y), pxToDocUnits(CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), "F");
+        pdf.rect(pxToDocUnits(pos.cut.x), pxToDocUnits(pos.cut.y), pxToDocUnits(CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), "F");
+        pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - CORNER_LENGTH), pxToDocUnits(pos.cut.y + pos.cut.height - CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), "F");
+        pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - CORNER_WIDTH), pxToDocUnits(pos.cut.y + pos.cut.height - CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), "F");
+        pdf.setFillColor("green");
+        pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - CORNER_LENGTH), pxToDocUnits(pos.cut.y), pxToDocUnits(CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), "F");
+        pdf.rect(pxToDocUnits(pos.cut.x + pos.cut.width - CORNER_WIDTH), pxToDocUnits(pos.cut.y), pxToDocUnits(CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), "F");
+        pdf.rect(pxToDocUnits(pos.cut.x), pxToDocUnits(pos.cut.y + pos.cut.height - CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), "F");
+        pdf.rect(pxToDocUnits(pos.cut.x), pxToDocUnits(pos.cut.y + pos.cut.height - CORNER_LENGTH), pxToDocUnits(CORNER_WIDTH), pxToDocUnits(CORNER_LENGTH), "F");
     }
 
     const computePageLayout = () => {
@@ -284,6 +301,9 @@ const PrintingToolPage = () => {
                     <PrintToolInput key={autoKey()} name="Pixels Per Inch" docPropsKey="ppi" type="number" {...commonInputProps}></PrintToolInput>
                     <label key={autoKey()} className="printingToolCheckbox">Use Cutting Guides:
                         <input type="checkbox" defaultChecked={docProps.useCuttingAids} onInput={(e) => updateDocProps({"useCuttingAids": e.target.checked})} />
+                    </label>
+                    <label key={autoKey()} className="printingToolCheckbox">Place Cut Lines Above Images:
+                        <input type="checkbox" defaultChecked={docProps.cutLinesAtop} onInput={(e) => updateDocProps({"cutLinesAtop": e.target.checked})} />
                     </label>
                     <label key={autoKey()} className="printingToolCheckbox">Bleed edge included in image:
                         <input type="checkbox" defaultChecked={docProps.imgIncludesBleedEdge} onInput={(e) => updateDocProps({"imgIncludesBleedEdge": e.target.checked})} />
