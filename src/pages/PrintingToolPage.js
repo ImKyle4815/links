@@ -121,16 +121,7 @@ const PrintingToolPage = () => {
         // Compute positions
         const pageLayout = computePageLayout();
         // Collect image information
-        const imgs = [];
-        for (const [index, image] of images.entries()) {
-            // If the number of images exceeds the viewable area, quit early
-            if (index >= pageLayout.numCardsX * pageLayout.numCardsY) break;
-            imgs.push({
-                image: image,
-                index: index,
-                pos: computePositions(index, pageLayout)
-            });
-        }
+        const imgs = computeImageInfo(pageLayout);
         // Draw the cut lines below the images
         if (docProps.useCuttingAids && !docProps.cutLinesAtop) for (let img of imgs) await drawCutLinePDF(pdf, pageLayout, img.index, img.pos);
         // Draw the images
@@ -199,6 +190,20 @@ const PrintingToolPage = () => {
             pageMarginX: pageMarginX,
             pageMarginY: pageMarginY
         };
+    }
+
+    const computeImageInfo = (pageLayout) => {
+        const imgs = [];
+        for (const [index, image] of images.entries()) {
+            // If the number of images exceeds the viewable area, quit early
+            if (index >= pageLayout.numCardsX * pageLayout.numCardsY) break;
+            imgs.push({
+                image: image,
+                index: index,
+                pos: computePositions(index, pageLayout)
+            });
+        }
+        return imgs;
     }
 
     const computePositions = (index, { totalCardWidth, totalCardHeight, numCardsX, numCardsY, pageMarginX, pageMarginY }) => {
