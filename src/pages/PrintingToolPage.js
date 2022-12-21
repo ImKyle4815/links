@@ -52,6 +52,10 @@ const PrintingToolPage = () => {
         return px / docProps.ppi * 72;
     }
 
+    const pxToCanvasUnits = (px) => {
+        return px;// * PREVIEW_SCALE;
+    }
+
     const uploadImages = (newImagesFileList) => {
         setCanDownload(false);
         const readers = [];
@@ -94,20 +98,67 @@ const PrintingToolPage = () => {
         setCanDownload(true);
     }
 
-    const updatePreview = (imagesToPreview = images) => {
+    const updatePreview = async (imagesToPreview = images) => {
+        // Reset the canvas/context
         const canvas = document.querySelector("canvas");
         if (!canvas) return;
         const context = canvas.getContext("2d");
         context.clearRect(0, 0, canvas.width, canvas.height);
-        canvas.width = docProps.pageWidth * PREVIEW_SCALE;
-        canvas.height = docProps.pageHeight * PREVIEW_SCALE;
+        canvas.width = pxToCanvasUnits(docProps.pageWidth);
+        canvas.height = pxToCanvasUnits(docProps.pageHeight);
         context.fillStyle = "white";
         context.fillRect(0, 0, canvas.width, canvas.height);
+        // Compute positions
         const pageLayout = computePageLayout();
-        for (const [index, image] of imagesToPreview.entries()) {
-            const pos = computePositions(index, pageLayout);
-            context.drawImage(image, pos.img.x * PREVIEW_SCALE, pos.img.y * PREVIEW_SCALE, pos.img.width * PREVIEW_SCALE, pos.img.height * PREVIEW_SCALE);
+        // Collect image information
+        const imgs = collectImageInfo(imagesToPreview, pageLayout);
+        // Draw the cut lines below the images
+        if (docProps.useCuttingAids && !docProps.cutLinesAtop) for (let img of imgs) await drawCutLine(context, pageLayout, img.index, img.pos);
+        // Draw the images
+        for (let img of imgs) await drawCard(context, img.pos, img.image);
+        // Draw the cut lines above the images
+        if (docProps.useCuttingAids && docProps.cutLinesAtop) for (let img of imgs) await drawCutLine(context, pageLayout, img.index, img.pos);
+        // Draw the cut corners
+        if (docProps.useCuttingAids) for (let img of imgs) await drawCutCorner(context, img.pos);
+        // Return
+        return;
+    }
+
+    const drawCard = async (context, pos, image) => {
+        // Bleed edge (if not in the image)
+        if (!docProps.imgIncludesBleedEdge) {
+            context.fillStyle = docProps.bleedEdgeColor;
+            context.fillRect(pxToCanvasUnits(pos.bleed.x), pxToCanvasUnits(pos.bleed.y), pxToCanvasUnits(pos.bleed.width), pxToCanvasUnits(pos.bleed.height));
         }
+        // Card image
+        await context.drawImage(image, pxToCanvasUnits(pos.img.x), pxToCanvasUnits(pos.img.y), pxToCanvasUnits(pos.img.width), pxToCanvasUnits(pos.img.height));
+    }
+
+    const drawCutLine = async (context, pageLayout, index, pos) => {
+        context.fillStyle = "black";
+        // First card in a row
+        if (index % pageLayout.numCardsX === 0) {
+            context.fillRect(0, pxToCanvasUnits(pos.cut.y - 1), pxToCanvasUnits(docProps.pageWidth), pxToCanvasUnits(2));
+            context.fillRect(0, pxToCanvasUnits(pos.cut.y + pos.cut.height - 1), pxToCanvasUnits(docProps.pageWidth), pxToCanvasUnits(2));
+        }
+        // First card in a column
+        if (Math.floor(index / pageLayout.numCardsX) % pageLayout.numCardsY === 0) {
+            context.fillRect(pxToCanvasUnits(pos.cut.x - 1), 0, pxToCanvasUnits(2), pxToCanvasUnits(docProps.pageHeight));
+            context.fillRect(pxToCanvasUnits(pos.cut.x + pos.cut.width - 1), 0, pxToCanvasUnits(2), pxToCanvasUnits(docProps.pageHeight));
+        }
+    }
+
+    const drawCutCorner = async (context, pos) => {
+        context.fillStyle = "magenta";
+        context.fillRect(pxToCanvasUnits(pos.cut.x), pxToCanvasUnits(pos.cut.y), pxToCanvasUnits(CORNER_LENGTH), pxToCanvasUnits(CORNER_WIDTH));
+        context.fillRect(pxToCanvasUnits(pos.cut.x), pxToCanvasUnits(pos.cut.y), pxToCanvasUnits(CORNER_WIDTH), pxToCanvasUnits(CORNER_LENGTH));
+        context.fillRect(pxToCanvasUnits(pos.cut.x + pos.cut.width - CORNER_LENGTH), pxToCanvasUnits(pos.cut.y + pos.cut.height - CORNER_WIDTH), pxToCanvasUnits(CORNER_LENGTH), pxToCanvasUnits(CORNER_WIDTH));
+        context.fillRect(pxToCanvasUnits(pos.cut.x + pos.cut.width - CORNER_WIDTH), pxToCanvasUnits(pos.cut.y + pos.cut.height - CORNER_LENGTH), pxToCanvasUnits(CORNER_WIDTH), pxToCanvasUnits(CORNER_LENGTH));
+        context.fillStyle = "green";
+        context.fillRect(pxToCanvasUnits(pos.cut.x + pos.cut.width - CORNER_LENGTH), pxToCanvasUnits(pos.cut.y), pxToCanvasUnits(CORNER_LENGTH), pxToCanvasUnits(CORNER_WIDTH));
+        context.fillRect(pxToCanvasUnits(pos.cut.x + pos.cut.width - CORNER_WIDTH), pxToCanvasUnits(pos.cut.y), pxToCanvasUnits(CORNER_WIDTH), pxToCanvasUnits(CORNER_LENGTH));
+        context.fillRect(pxToCanvasUnits(pos.cut.x), pxToCanvasUnits(pos.cut.y + pos.cut.height - CORNER_WIDTH), pxToCanvasUnits(CORNER_LENGTH), pxToCanvasUnits(CORNER_WIDTH));
+        context.fillRect(pxToCanvasUnits(pos.cut.x), pxToCanvasUnits(pos.cut.y + pos.cut.height - CORNER_LENGTH), pxToCanvasUnits(CORNER_WIDTH), pxToCanvasUnits(CORNER_LENGTH));
     }
 
     const generatePdf = async () => {
@@ -121,7 +172,7 @@ const PrintingToolPage = () => {
         // Compute positions
         const pageLayout = computePageLayout();
         // Collect image information
-        const imgs = computeImageInfo(pageLayout);
+        const imgs = collectImageInfo(images, pageLayout);
         // Draw the cut lines below the images
         if (docProps.useCuttingAids && !docProps.cutLinesAtop) for (let img of imgs) await drawCutLinePDF(pdf, pageLayout, img.index, img.pos);
         // Draw the images
@@ -192,18 +243,18 @@ const PrintingToolPage = () => {
         };
     }
 
-    const computeImageInfo = (pageLayout) => {
-        const imgs = [];
-        for (const [index, image] of images.entries()) {
+    const collectImageInfo = (imgs, pageLayout) => {
+        const imgsInfo = [];
+        for (const [index, image] of imgs.entries()) {
             // If the number of images exceeds the viewable area, quit early
             if (index >= pageLayout.numCardsX * pageLayout.numCardsY) break;
-            imgs.push({
+            imgsInfo.push({
                 image: image,
                 index: index,
                 pos: computePositions(index, pageLayout)
             });
         }
-        return imgs;
+        return imgsInfo;
     }
 
     const computePositions = (index, { totalCardWidth, totalCardHeight, numCardsX, numCardsY, pageMarginX, pageMarginY }) => {
@@ -231,6 +282,20 @@ const PrintingToolPage = () => {
             cut: cuts,
             img: (docProps.imgIncludesBleedEdge ? bleedSpace : cuts)
         };
+    }
+
+    const downloadPng = async () => {
+        setCanDownload(false);
+        updatePreview().then(() => {
+            const canvas = document.querySelector("canvas");
+            const download = document.createElement("a");
+            download.download="print.png";
+            download.style.display = "none";
+            download.href = canvas.toDataURL("image/png");
+            document.body.appendChild(download);
+            download.click();
+            document.body.removeChild(download);
+        });
     }
 
     const downloadPdf = async () => {
@@ -288,10 +353,11 @@ const PrintingToolPage = () => {
                 </div>
                 <div className="previewContainer">
                     <canvas width="5" height="7" className="preview"></canvas>
-                    <p className="previewText">PREVIEW</p>
+                    {/* <p className="previewText">PREVIEW</p> */}
                 </div>
                 <div style={{marginLeft:"auto", marginRight:"auto", maxWidth:"512px"}}>
                     <Button onClick={downloadPdf} disabled={!canDownload}>Download PDF</Button>
+                    <Button onClick={downloadPng} disabled={!canDownload}>Download PNG</Button>
                 </div>
                 <div className="printingToolForm">
                     <h2 className="center">Layout Options</h2>
