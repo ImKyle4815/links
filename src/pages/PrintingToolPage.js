@@ -295,6 +295,7 @@ const PrintingToolPage = () => {
             document.body.appendChild(download);
             download.click();
             document.body.removeChild(download);
+            setCanDownload(true);
         });
     }
 
