@@ -43,7 +43,7 @@ const UrzaPage = () => {
             </PageSection>
             <PageSection>
                 <h2>What's Ask Urza 2.0?</h2>
-                <p>Ask Urza 2.0 is a fan-made, reimagined version of the <a href="https://magic.wizards.com/en/unresources#funhouse" target="_blank" rel="noreferrer">"Ask Urza" webpage</a> made by Wizards of the Coast for a card named Urza, Academy Headmaster. Ask Urza traditionally has 20 randomized effects for each of its three loyalty abilities, but Ask Urza 2.0 takes things a step further. Here, you're randomly drawing from every planeswalker abilities that has ever been printed on a Magic card.</p>
+                <p>Ask Urza 2.0 is a fan-made, reimagined version of the <a href="https://magic.wizards.com/en/unresources#funhouse" target="_blank" rel="noreferrer">"Ask Urza" webpage</a> made by Wizards of the Coast for a card named Urza, Academy Headmaster. Ask Urza traditionally has 20 randomized effects for each of its three loyalty abilities, but Ask Urza 2.0 takes things a step further. Here, you're randomly drawing from every planeswalker abilities that has ever been printed on a Magic card. It also features the objectively better art of Urza, so... yeah.</p>
                 <p>We periodically compile a list of every planeswalker ability and sort them into the three categories. Currently, the thresholds are as follows:</p>
                 <ul>
                     <li>+1: any ability costing +1 or more</li>
