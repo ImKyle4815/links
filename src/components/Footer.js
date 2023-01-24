@@ -8,7 +8,8 @@ const Footer = (props) => {
                 <nav>
                     <Link to="/">Links</Link> |{" "}
                     <Link to="/print">Printing Guide</Link> |{" "}
-                    <Link to="/printTool">Print Page Tool</Link>
+                    <Link to="/printTool">Print Page Tool</Link> |{" "}
+                    <Link to="/urza">Ask Urza 2.0</Link>
                 </nav>
             </div>
         </footer>

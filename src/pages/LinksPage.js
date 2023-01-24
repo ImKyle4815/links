@@ -37,6 +37,7 @@ const LinksPage = () => {
             <Link text="PayPal" url="https://www.paypal.me/kyleburtondonate" img={require("../img/linkIcons/paypal.svg").default} />
             <Link text="Amazon Wishlist" url="https://www.amazon.com/hz/wishlist/ls/E3IFK47XF71H?ref_=wl_share" img={require("../img/linkIcons/amazon.svg").default} backdrop={true} />
             <LinkDiv text="MTG" />
+            <Link text="Ask Urza 2.0" url="/urza" img={require("../img/linkIcons/docIcon.svg").default} sameTab={true} />
             <Link text="Moxfield Decklists" url="https://www.moxfield.com/users/ImKyle4815" img={require("../img/linkIcons/moxfield.png")} backdrop={true} />
             <Link text="Commander Cube" url="https://cubecobra.com/cube/list/kyle" img={require("../img/linkIcons/cubeCobra.png")} />
             <Link text="Un Cube" url="https://cubecobra.com/cube/list/root" img={require("../img/linkIcons/cubeCobra.png")} />
