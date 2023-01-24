@@ -5,14 +5,18 @@
     margin-top: 1rem;
 }
 
+.ask-urza {
+    min-height: 30rem;
+}
+
 .loyalty-abilities {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    max-width: 15rem;
+    max-width: 18rem;
     margin-left: auto;
     margin-right: auto;
-    gap: 1rem;
-    margin-top: 2rem;
+    gap: 2rem;
+    margin-top: 3rem;
     & > button {
         font-size: 2rem;
         height: 3rem;
@@ -23,8 +27,9 @@
 .activated-ability {
     font-size: 2rem;
     text-align: center;
-    margin-top: 2rem;
+    margin-top: 5rem;
     padding: 2rem;
     border-radius: 1rem;
     background-color: #000000dd;
+    vertical-align: middle;
 }
