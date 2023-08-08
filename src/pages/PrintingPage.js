@@ -98,7 +98,7 @@ const PrintingPage = () => {
                             Corner Puncher
                             <ul>
                                 <li>
-                                    The exact listing is no longer available, but you can find <a href="https://www.amazon.com/Baoblaze-Rounder-Perfect-Counter-Clipping/dp/B07MCBL993?&linkCode=ll1&tag=imkyle481506-20&linkId=6e9298ec2bc10b1b78f8c1439145ae35&language=en_US&ref_=as_li_ss_tl" target="_blank" rel="noreferrer">this 3mm corner puncher</a> almost anywhere - it looks exactly the same as the one I use, and many other listings, but it's such a great tool.
+                                    The exact listing is no longer available, but you can find <a href="https://www.amazon.com/dailymall-Radius-Corner-Rounder-Cutter/dp/B07XWXCKQ1?crid=1J5VPP9OJ02VT&keywords=3mm+corner+puncher+heavy+duty&qid=1691457177&sprefix=3mm+corner+puncher+heavy+duty%2Caps%2C160&sr=8-3&linkCode=li2&tag=imkyle481506-20&linkId=efb53345ac087e126e7fec7daf751724&language=en_US&ref_=as_li_ss_il" target="_blank" rel="noreferrer">this 3mm corner puncher</a> almost anywhere - it looks exactly the same as the one I use, and many other listings, but it's such a great tool.
                                 </li>
                             </ul>
                         </li>
